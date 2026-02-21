@@ -8,7 +8,7 @@ export let session: LinkSession | undefined;
 
 const REQUEST_ACCOUNT = 'taskly'
 const CHAIN_ID = '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0'
-const ENDPOINTS = ['https://proton.greymass.com']
+const ENDPOINTS = ['https://proton.eosusa.io', 'https://api.protonnz.com']
 
 const rpc = new JsonRpc(ENDPOINTS)
 

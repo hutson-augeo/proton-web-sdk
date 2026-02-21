@@ -7,12 +7,14 @@ interface UserState {
     actor: string;
     permission: string;
     accountData?: RpcInterfaces.UserInfo;
+    cooldownRefreshAt: number;
 }
 
 // Define the initial state using that type
 const initialState: UserState = {
   actor: '',
   permission: '',
+  cooldownRefreshAt: 0,
 }
 
 export const userSlice = createSlice({
@@ -28,12 +30,15 @@ export const userSlice = createSlice({
       console.log('setUser', state);
     },
     clearUser: (state) => {
-        userSlice.caseReducers.setUser(state, { type: 'setUser', payload: { actor: '', permission: '' }})
-    }
+        userSlice.caseReducers.setUser(state, { type: 'setUser', payload: { actor: '', permission: '', cooldownRefreshAt: 0 }})
+    },
+    bumpCooldown: (state) => {
+        state.cooldownRefreshAt = Date.now()
+    },
   }
 })
 
-export const { setUser, clearUser } = userSlice.actions
+export const { setUser, clearUser, bumpCooldown } = userSlice.actions
 
 export const selectUser = (state: RootState) => state.user
 

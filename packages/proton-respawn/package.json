@@ -1,0 +1,72 @@
+{
+  "name": "@proton/respawn",
+  "version": "1.0.0",
+  "description": "Respawn access flow for XPR Network — token balance query, on-chain cooldown check, and pay-or-wait modal",
+  "homepage": "https://github.com/XPRNetwork/proton-web-sdk",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "main": "lib/proton-respawn.js",
+  "module": "lib/proton-respawn.m.js",
+  "unpkg": "lib/proton-respawn.bundle.js",
+  "types": "lib/types/proton-respawn.d.ts",
+  "typings": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/proton-respawn.d.ts",
+      "import": "./lib/proton-respawn.m.js",
+      "require": "./lib/proton-respawn.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "watch": "rollup -c -w",
+    "prepare": "make",
+    "build": "make",
+    "lint": "make lint"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@proton/link": "workspace:^"
+  },
+  "peerDependencies": {
+    "@proton/link": "workspace:^"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@tsconfig/svelte": "^5.0.4",
+    "@types/node": "^16.4.0",
+    "core-js": "^3.42.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-svelte": "^3.13.0",
+    "globals": "^16.5.0",
+    "jiti": "^2.6.1",
+    "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0",
+    "rollup": "^4.40.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-svelte": "^7.2.0",
+    "sass": "^1.89.0",
+    "svelte": "^5.41.0",
+    "svelte-check": "^4.3.3",
+    "svelte-eslint-parser": "^1.4.0",
+    "svelte-preprocess": "^6.0.3",
+    "ts-node": "^10.0.0",
+    "tslib": "^2.4.0",
+    "typescript": "~5.4.0",
+    "typescript-eslint": "^8.46.4"
+  }
+}

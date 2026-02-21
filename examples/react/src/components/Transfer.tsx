@@ -15,8 +15,9 @@ export const Transfer = () => {
   }
 
   return (
-    <div className="p-8 flex items-center justify-center bg-white">
-      <div className="w-full max-w-xs mx-auto space-y-4">
+    <div className="bg-white rounded-2xl shadow border border-gray-100 p-6">
+      <h2 className="text-lg font-semibold text-gray-800 mb-4">Transfer</h2>
+      <div className="space-y-4">
         <div>
           <label htmlFor="from" className="flex text-sm font-medium text-gray-700">From</label>
           <div className="mt-1">
