@@ -6,7 +6,8 @@
       "Bash(playwright install chromium)",
       "Bash(node /tmp/capture-screens.mjs)",
       "Bash(lsof -ti:5199)",
-      "Bash(xargs kill -9)"
+      "Bash(xargs kill -9)",
+      "Read(//private/tmp/pw-capture/**)"
     ]
   }
 }

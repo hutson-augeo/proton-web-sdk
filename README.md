@@ -8,10 +8,33 @@ XPR Network wallet SDK for web apps — authentication, session management, tran
 
 ![Token Journey — idle](docs/screenshots/01-idle.png)
 
+<details>
+<summary><strong>Transfer tray + Vault Gate close-up</strong></summary>
+
 | | |
 |---|---|
 | ![Transfer tray](docs/screenshots/02-transfer-tray.png) | ![Vault Gate](docs/screenshots/05-vault-gate-column.png) |
-| Transfer tray — slides in from the left | Vault Gate — dormant until steps 1–3 complete |
+| Transfer tray slides in from the left without displacing the journey | Vault Gate — dormant and dimmed until steps 1–3 complete. `1.0000 XPR` is always visible — the cost of instant access is never hidden |
+
+</details>
+
+<details>
+<summary><strong>Post-selection — paid path · Access Granted</strong></summary>
+
+Payment confirmed on-chain. No clock. The panel goes emerald — clean, immediate, final. The amount is echoed back as confirmation of what was exchanged.
+
+![Paid access granted](docs/screenshots/07-paid-access-granted.png)
+
+</details>
+
+<details>
+<summary><strong>Post-selection — free path · Countdown running</strong></summary>
+
+Free access recorded. The 24-hour cooldown clock starts immediately. Orange segmented digits. Blinking colons. An unlock timestamp. Every second visible is a second of pressure — a persistent reminder that paying would have skipped all of this.
+
+![Free path — clock running](docs/screenshots/08-free-clock-running.png)
+
+</details>
 
 ---
 
