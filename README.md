@@ -4,6 +4,30 @@ XPR Network wallet SDK for web apps — authentication, session management, tran
 
 ---
 
+## The Problem
+
+Hard paywalls turn users away. Free tiers with no friction convert nobody. **Time-gated, token-backed access** solves this at the protocol level.
+
+Every user gets one free entry per window (default 24h). After that: pay to skip the wait, or watch a live countdown clock drain in real time. No backend to game. No admin panel to bypass. The contract is the gatekeeper.
+
+<details>
+<summary><strong>The psychology — why a clock converts</strong></summary>
+
+A dollar amount in isolation is easy to dismiss. But `23:41:07` next to `1.0000 XPR` reframes the question entirely. You are no longer deciding if a thing is worth a dollar — you are deciding whether the next 23 hours of your life are worth one.
+
+**Loss aversion does the work.** We feel the pain of waiting far more acutely than we feel the pleasure of saving money. The clock makes that loss visceral, second by second, in front of the user exactly when they have demonstrated intent.
+
+**Key principles:**
+- Irreversibility creates commitment — on-chain choices feel real because they are
+- Friction is a filter, not a failure — it surfaces high-intent users and discards the rest
+- The free path must feel costly — a painless wait destroys the conversion case for paying
+- Paying must feel like relief — emerald "Access Granted", clean, immediate, final
+- On-chain enforcement is a trust signal — the contract cannot be gamed or reset
+
+</details>
+
+---
+
 ## Token Journey Demo
 
 ![Token Journey — idle](docs/screenshots/01-idle.png)
@@ -33,30 +57,6 @@ Payment confirmed on-chain. No clock. The panel goes emerald — clean, immediat
 Free access recorded. The 24-hour cooldown clock starts immediately. Orange segmented digits. Blinking colons. An unlock timestamp. Every second visible is a second of pressure — a persistent reminder that paying would have skipped all of this.
 
 ![Free path — clock running](docs/screenshots/08-free-clock-running.png)
-
-</details>
-
----
-
-## The Problem
-
-Hard paywalls turn users away. Free tiers with no friction convert nobody. **Time-gated, token-backed access** solves this at the protocol level.
-
-Every user gets one free entry per window (default 24h). After that: pay to skip the wait, or watch a live countdown clock drain in real time. No backend to game. No admin panel to bypass. The contract is the gatekeeper.
-
-<details>
-<summary><strong>The psychology — why a clock converts</strong></summary>
-
-A dollar amount in isolation is easy to dismiss. But `23:41:07` next to `1.0000 XPR` reframes the question entirely. You are no longer deciding if a thing is worth a dollar — you are deciding whether the next 23 hours of your life are worth one.
-
-**Loss aversion does the work.** We feel the pain of waiting far more acutely than we feel the pleasure of saving money. The clock makes that loss visceral, second by second, in front of the user exactly when they have demonstrated intent.
-
-**Key principles:**
-- Irreversibility creates commitment — on-chain choices feel real because they are
-- Friction is a filter, not a failure — it surfaces high-intent users and discards the rest
-- The free path must feel costly — a painless wait destroys the conversion case for paying
-- Paying must feel like relief — emerald "Access Granted", clean, immediate, final
-- On-chain enforcement is a trust signal — the contract cannot be gamed or reset
 
 </details>
 
