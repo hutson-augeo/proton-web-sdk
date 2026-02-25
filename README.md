@@ -50,103 +50,41 @@ Server-side cooldowns can be reset, circumvented, or simply forgotten when the d
 
 The React demo (`examples/react`) walks through the full experience as a live, step-by-step flow.
 
-### The Vault Gate — idle
+### Default layout — idle, no wallet connected
 
-Before wallet connection, the gate is present but dormant. The two doors are visible, muted, non-interactive. The structure signals what is coming without demanding anything yet.
+The Transfer tray sits collapsed on the left. The 5-step journey occupies the center. The Vault Gate is always visible on the right — dormant and dimmed until steps 1–3 complete.
 
-```
-┌─────────────────────────────┐
-│  ACCESS GATE                │
-│  Complete steps 1–3         │
-│  to unlock                  │
-│                             │
-│  ┌──────────────────────┐   │
-│  │  INSTANT ACCESS      │   │
-│  │  1.0000 XPR          │   │  ← dimmed, not yet interactive
-│  │  PAY NOW ›           │   │
-│  ├──────────────────────┤   │
-│  │  --:--:--            │   │
-│  │  RETURN LATER        │   │
-│  └──────────────────────┘   │
-└─────────────────────────────┘
-```
+![Token Journey — idle](docs/screenshots/01-idle.png)
 
-### The Vault Gate — active, cooldown locked
+### Transfer tray open
 
-Status has resolved. The user has an active cooldown on-chain. The pay door activates and glows. The free door shows the live countdown — every second visible, every second a pressure.
+The tray slides out from the left edge without displacing the journey or vault. Transfer and access management live side by side.
 
-```
-┌─────────────────────────────┐
-│  ACCESS GATE                │
-│  On-chain · irreversible    │
-│                             │
-│  ┌──────────────────────┐   │
-│  │  INSTANT ACCESS    ░░│   │
-│  │  1.0000 XPR     ░░░░░│   │  ← purple ambient glow on hover
-│  │  PAY NOW ›       ░░░░│   │
-│  ├──────────────────────┤   │
-│  │  23:41:07            │   │  ← amber, live, ticking
-│  │  on-chain cooldown   │   │
-│  │  NOT READY           │   │
-│  └──────────────────────┘   │
-└─────────────────────────────┘
-```
+![Transfer tray open](docs/screenshots/02-transfer-tray.png)
+
+### Vault Gate — pre-journey close-up
+
+Both doors are present from the first render, muted and locked. The structure primes the user for the decision before they reach it. `1.0000 XPR` is visible immediately — the cost of instant access is never hidden.
+
+![Vault Gate — idle close-up](docs/screenshots/05-vault-gate-column.png)
 
 ### Post-selection — paid path
 
-The gate confirms the payment. Clean, immediate, final. No clock. The expanded panel communicates that the wait has been bought out entirely.
+The gate confirms the payment. Clean, immediate, final. No clock. The expanded panel communicates that the wait has been bought out entirely — emerald green, "Access Granted", the amount echoed back as confirmation.
 
-```
-┌─────────────────────────────────────┐
-│  ● confirmed on-chain               │
-│  [ PAID ACCESS ]  1.0000 XPR        │
-│                                     │
-│  Payment Confirmed                  │
-│  instant · no wait required         │
-│                                     │
-│  ┌───────────────────────────────┐  │
-│  │  Access Granted               │  │  ← emerald
-│  │                               │  │
-│  │          1.0000               │  │
-│  │           XPR                 │  │
-│  └───────────────────────────────┘  │
-│                                     │
-│  cooldown resets in 24h             │
-└─────────────────────────────────────┘
-```
+> Capture after completing the journey with a funded wallet and selecting PAY NOW.
 
 ### Post-selection — free path
 
-The gate confirms free access and immediately starts the new cooldown clock. 24 hours, in orange, ticking. The user made a choice and now lives with it — but they can always pay next time.
+The gate confirms free access and immediately starts the new cooldown clock. 24 hours, in orange, ticking. Segmented digits. Blinking colons. The unlock timestamp anchors the cost of waiting to a real calendar moment.
 
-```
-┌─────────────────────────────────────┐
-│  ● confirmed on-chain               │
-│  [ FREE ACCESS ]                    │
-│                                     │
-│  On-Chain Cooldown                  │
-│  free · enforced wait               │
-│                                     │
-│  ┌──────┐   ┌──────┐   ┌──────┐    │
-│  │  23  │ : │  41  │ : │  07  │    │  ← orange, blinking colons
-│  └──────┘   └──────┘   └──────┘    │
-│   HRS         MIN        SEC        │
-│                                     │
-│  unlocks Dec 22, 2024 14:32:00     │
-└─────────────────────────────────────┘
-```
+> Capture after completing the journey and selecting the free path.
 
 ### The persistent cooldown strip
 
-A slim dark bar anchored to the top of the page reflects the user's on-chain status at all times. Whether they are mid-journey or returning the next day, they see the same live countdown — or the green signal that free access is available again.
+A slim dark bar anchored to the top reflects the user's on-chain status at all times — pulsing orange with a live `HH:MM:SS` countdown when locked, switching to emerald when the window expires. Always rendered at fixed height so the layout never shifts.
 
-```
-● mhutsonmac  ·  Locked  ·  Next free access in  23:41:07  ·  unlocks Dec 22, 2024  [↺ refresh]
-```
-
-```
-● mhutsonmac  ·  Access Available  ·  Cooldown expired — free entry ready
-```
+> Visible in all screenshots above — top bar, dark background, Login button top-right.
 
 ---
 

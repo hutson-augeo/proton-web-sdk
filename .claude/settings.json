@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --yes playwright --version)",
+      "Bash(npx playwright node /tmp/capture-screens.mjs)",
+      "Bash(playwright install chromium)",
+      "Bash(node /tmp/capture-screens.mjs)",
+      "Bash(lsof -ti:5199)",
+      "Bash(xargs kill -9)"
+    ]
+  }
+}
