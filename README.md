@@ -8,6 +8,148 @@ This monorepo ships the core SDK alongside a suite of companion packages, includ
 
 ---
 
+## The Problem: Gatekeeping Access by Time or Token
+
+Most digital products face the same monetization paradox. A hard paywall turns users away before they understand the value. A free tier with no friction creates no urgency, no conversion, and no revenue. The middle ground — freemium with a meaningful cost — has historically required server-side enforcement, trust in a central authority, and constant abuse monitoring.
+
+**Time-gated, token-backed access solves this at the protocol level.**
+
+The premise is simple: every user gets one free entry per window. Once used, the blockchain records it. The next entry requires either waiting for the window to expire or paying to skip the wait. There is no backend to game, no admin panel to bypass, no "contact support" loophole. The contract is the gatekeeper.
+
+This model works because it applies cost at the exact moment a user has demonstrated intent. They are already inside the experience, they already want the next step — and now they face a real decision with real consequences. That is when conversion happens.
+
+---
+
+## The Psychology: FOMO, Friction, and the Value of a Clock
+
+Time scarcity is one of the oldest and most effective forces in human decision-making. We are wired to weigh losses more heavily than equivalent gains — a phenomenon behavioral economists call **loss aversion**. A countdown clock makes loss visceral. It is not an abstract "you'll have to wait." It is `23:41:07` draining in front of you, second by second, right now.
+
+### Why the clock converts
+
+A dollar amount in isolation is easy to dismiss. "1 XPR" means nothing without context. But `23:41:07` next to `1.0000 XPR` reframes the question entirely. You are no longer deciding whether a thing is worth a dollar. You are deciding whether the next 23 hours of your time are worth a dollar. For most people, in most contexts, they are not.
+
+The paid option does not need to be cheap — it needs to feel cheap relative to the cost of waiting. The clock does that work automatically, and it gets more effective the longer the user stays on the page.
+
+### The design principles at work
+
+**Irreversibility creates commitment.** Once a choice is recorded on-chain, it cannot be undone. This is not a bug — it is what makes the decision feel real. Soft, reversible choices produce soft engagement. Hard, on-chain choices produce users who are invested.
+
+**Friction is a filter, not a failure.** Users who bounce at the gate were not going to convert anyway. Users who stay and face the clock are already high-intent. The gate does not reduce your audience — it reveals it.
+
+**The free path must feel costly.** If waiting is painless, paying is irrational. The clock must be prominent, persistent, and impossible to ignore. It should feel like watching something drain. Orange for urgency. Segmented digits. Blinking colons. The design should make a person feel the time, not just read it.
+
+**Paying should feel like relief.** The paid confirmation is intentionally calm — emerald green, "Access Granted", clean. The contrast with the ticking clock is the product. The user should feel like they made a good decision the moment they pay, not anxiety about what they spent.
+
+### The on-chain advantage
+
+Server-side cooldowns can be reset, circumvented, or simply forgotten when the database is migrated. On-chain cooldowns are permanent, public, and enforced by the same consensus mechanism that secures the entire network. Users cannot lie to the contract, and the contract cannot lie to the user. This transparency is itself a trust signal — and trust reduces the psychological cost of paying.
+
+---
+
+## UI: The Token Journey
+
+The React demo (`examples/react`) walks through the full experience as a live, step-by-step flow.
+
+### The Vault Gate — idle
+
+Before wallet connection, the gate is present but dormant. The two doors are visible, muted, non-interactive. The structure signals what is coming without demanding anything yet.
+
+```
+┌─────────────────────────────┐
+│  ACCESS GATE                │
+│  Complete steps 1–3         │
+│  to unlock                  │
+│                             │
+│  ┌──────────────────────┐   │
+│  │  INSTANT ACCESS      │   │
+│  │  1.0000 XPR          │   │  ← dimmed, not yet interactive
+│  │  PAY NOW ›           │   │
+│  ├──────────────────────┤   │
+│  │  --:--:--            │   │
+│  │  RETURN LATER        │   │
+│  └──────────────────────┘   │
+└─────────────────────────────┘
+```
+
+### The Vault Gate — active, cooldown locked
+
+Status has resolved. The user has an active cooldown on-chain. The pay door activates and glows. The free door shows the live countdown — every second visible, every second a pressure.
+
+```
+┌─────────────────────────────┐
+│  ACCESS GATE                │
+│  On-chain · irreversible    │
+│                             │
+│  ┌──────────────────────┐   │
+│  │  INSTANT ACCESS    ░░│   │
+│  │  1.0000 XPR     ░░░░░│   │  ← purple ambient glow on hover
+│  │  PAY NOW ›       ░░░░│   │
+│  ├──────────────────────┤   │
+│  │  23:41:07            │   │  ← amber, live, ticking
+│  │  on-chain cooldown   │   │
+│  │  NOT READY           │   │
+│  └──────────────────────┘   │
+└─────────────────────────────┘
+```
+
+### Post-selection — paid path
+
+The gate confirms the payment. Clean, immediate, final. No clock. The expanded panel communicates that the wait has been bought out entirely.
+
+```
+┌─────────────────────────────────────┐
+│  ● confirmed on-chain               │
+│  [ PAID ACCESS ]  1.0000 XPR        │
+│                                     │
+│  Payment Confirmed                  │
+│  instant · no wait required         │
+│                                     │
+│  ┌───────────────────────────────┐  │
+│  │  Access Granted               │  │  ← emerald
+│  │                               │  │
+│  │          1.0000               │  │
+│  │           XPR                 │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│  cooldown resets in 24h             │
+└─────────────────────────────────────┘
+```
+
+### Post-selection — free path
+
+The gate confirms free access and immediately starts the new cooldown clock. 24 hours, in orange, ticking. The user made a choice and now lives with it — but they can always pay next time.
+
+```
+┌─────────────────────────────────────┐
+│  ● confirmed on-chain               │
+│  [ FREE ACCESS ]                    │
+│                                     │
+│  On-Chain Cooldown                  │
+│  free · enforced wait               │
+│                                     │
+│  ┌──────┐   ┌──────┐   ┌──────┐    │
+│  │  23  │ : │  41  │ : │  07  │    │  ← orange, blinking colons
+│  └──────┘   └──────┘   └──────┘    │
+│   HRS         MIN        SEC        │
+│                                     │
+│  unlocks Dec 22, 2024 14:32:00     │
+└─────────────────────────────────────┘
+```
+
+### The persistent cooldown strip
+
+A slim dark bar anchored to the top of the page reflects the user's on-chain status at all times. Whether they are mid-journey or returning the next day, they see the same live countdown — or the green signal that free access is available again.
+
+```
+● mhutsonmac  ·  Locked  ·  Next free access in  23:41:07  ·  unlocks Dec 22, 2024  [↺ refresh]
+```
+
+```
+● mhutsonmac  ·  Access Available  ·  Cooldown expired — free entry ready
+```
+
+---
+
 ## Packages
 
 | Package | Description |
@@ -19,45 +161,33 @@ This monorepo ships the core SDK alongside a suite of companion packages, includ
 
 ---
 
-## @proton/respawn — Gated Access with Time-Pressure
-
-The respawn package implements a two-path entry model built for apps that want to monetize access without hard paywalls.
-
-### The mechanic
-
-Every user gets one free entry per cooldown window (default 24 hours). Once used, the on-chain access table records their last entry timestamp and the clock starts. Until that window expires, they face a choice:
-
-**Pay to enter now** — skip the wait entirely by sending XPR to your payment contract. Immediate access, no countdown.
-
-**Wait it out** — a live segmented clock (`HH : MM : SS`) counts down the remaining lockout in real time. Every second the clock ticks is a second of friction designed to make the paid option feel cheap by comparison.
-
-The tension is intentional. Watching `23:41:07` count down is designed to create urgency. The paid door glows.
-
-### Configuration
+## @proton/respawn — API
 
 ```typescript
 import { checkRespawnStatus, recordFreeAccess, payForAccess } from '@proton/respawn'
 
 const config = {
   accessContract:  'myapp.access',   // contract that tracks last-access timestamps
-  accessTable:     'accounts',       // table name
-  accessAction:    'setaccess',      // action to record free access
-  paymentContract: 'myapp.pay',      // contract that processes XPR payment
-  paymentAction:   'unlock',         // payment action name
+  accessTable:     'accounts',
+  accessAction:    'setaccess',
+  paymentContract: 'myapp.pay',
+  paymentAction:   'unlock',
   paymentAmount:   '1.0000 XPR',     // cost to skip the cooldown
   cooldownHours:   24,               // lockout window in hours
 }
 
-// Check if the user can enter for free
+// Check current status for the connected wallet
 const status = await checkRespawnStatus(session, config)
 // status.canRespawnFree  — true if cooldown has expired
 // status.timeRemainingMs — milliseconds until free access is available
-// status.hasEnoughXpr    — true if user balance >= paymentAmount
+// status.hasEnoughXpr    — true if balance >= paymentAmount
+// status.xprBalance      — current XPR balance
+// status.cooldownEnds    — Date when free access returns
 
-// Record a free entry (after cooldown expires)
+// Record a free entry
 await recordFreeAccess(session, config)
 
-// Pay to bypass the cooldown immediately
+// Pay to skip the cooldown
 await payForAccess(session, config)
 ```
 
@@ -66,7 +196,7 @@ await payForAccess(session, config)
 ```
 table:  'accounts' (or configured name)
 scope:  <contract account>
-fields: { account: name, last_access: uint32 }  // last_access in unix seconds
+fields: { account: name, last_access: uint32 }   // unix seconds
 ```
 
 ---
@@ -74,23 +204,27 @@ fields: { account: name, last_access: uint32 }  // last_access in unix seconds
 ## Quick Start
 
 ```bash
-# Install dependencies
+# 1. Use the correct Node version
+nvm use
+
+# 2. Enable pnpm
+corepack enable
+
+# 3. Install all workspace dependencies
 pnpm install
 
-# Build all packages
+# 4. Build all packages
 pnpm run build
 
-# Run the React demo
+# 5. Run the React demo
 cd examples/react && pnpm dev
 ```
 
-### Install core SDK
+Open **http://localhost:5173**. Set `DEMO_MODE = true` in [TokenJourney.tsx](examples/react/src/components/TokenJourney.tsx) to run the full journey without deployed contracts.
 
-```bash
-npm install @proton/web-sdk
-# or
-yarn add @proton/web-sdk
-```
+---
+
+## Core SDK Usage
 
 ### Connect a wallet
 
@@ -102,9 +236,7 @@ const { link, session } = await ProtonWebSDK({
     endpoints: ['https://proton.eosusa.io'],
     restoreSession: false,
   },
-  transportOptions: {
-    requestAccount: 'myapp'
-  },
+  transportOptions: { requestAccount: 'myapp' },
   selectorOptions: {
     appName: 'My App',
     appLogo: 'https://myapp.com/logo.png',
@@ -132,41 +264,17 @@ await session.transact({
 
 ---
 
-## React Demo — Token Journey
-
-The React example (`examples/react`) demonstrates the full respawn access flow as a live 5-step gated experience:
-
-1. **Connect Wallet** — authenticate via XPR Network wallet
-2. **Fetch Token Balances** — query on-chain `eosio.token` account balances
-3. **Check Respawn Status** — read the on-chain access table for cooldown state
-4. **Vault Gate** — choose your entry path (pay instantly or wait out the clock)
-5. **Execute** — broadcast the chosen transaction on-chain
-
-The Vault Gate is always visible to the right of the journey steps. Before step 3 completes it sits dormant. The moment status resolves, the two doors activate: one lit in purple for instant paid entry, one showing the amber countdown for the free path.
-
-After selection, the right panel expands to a full hero clock display. Paid users see an emerald "Access Granted" confirmation. Free users watch the segmented orange countdown (`HH : MM : SS`) tick down the full 24-hour lockout — a persistent reminder that they could have paid to skip it.
-
-```bash
-cd examples/react
-pnpm install
-pnpm dev
-```
-
-Set `DEMO_MODE = true` in [TokenJourney.tsx](examples/react/src/components/TokenJourney.tsx) to simulate the full flow without deployed contracts.
-
----
-
 ## Monorepo Structure
 
 ```
 proton-web-sdk/
 ├── packages/
-│   ├── proton-web-sdk/          # Core SDK (npm: @proton/web-sdk)
-│   ├── proton-link/             # Link protocol
-│   ├── proton-browser-transport/# Browser modal UI
-│   └── proton-respawn/          # Access gate + cooldown enforcement
+│   ├── proton-web-sdk/           # Core SDK (npm: @proton/web-sdk)
+│   ├── proton-link/              # Link protocol
+│   ├── proton-browser-transport/ # Browser modal UI
+│   └── proton-respawn/           # Access gate + cooldown enforcement
 └── examples/
-    ├── react/                   # Full Token Journey demo
+    ├── react/                    # Full Token Journey demo
     ├── svelte/
     ├── vue/
     ├── angular/
@@ -178,17 +286,12 @@ proton-web-sdk/
 ## Development
 
 ```bash
-# Install
 pnpm install
-
-# Build all packages
 pnpm run build
-
-# Publish packages
 pnpm run publish-packages
 ```
 
-Node v18.19.1 is recommended. Use `nvm use` in the root to activate it (`.nvmrc` is set).
+Node v18.19.1 is recommended. Use `nvm use` in the root (`.nvmrc` is set).
 
 ---
 

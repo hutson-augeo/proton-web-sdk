@@ -18,7 +18,8 @@ export const Avatar = () => {
     setUser({
       actor: '',
       permission: '',
-      accountData: undefined
+      accountData: undefined,
+      cooldownRefreshAt: 0,
     })
   ), [dispatch])
 
@@ -37,7 +38,8 @@ export const Avatar = () => {
         setUser({
           actor: SDK.session.auth.actor.toString(),
           permission: SDK.session.auth.permission.toString(),
-          accountData: await SDK.getProtonAvatar(SDK.session.auth.actor.toString())
+          accountData: await SDK.getProtonAvatar(SDK.session.auth.actor.toString()),
+          cooldownRefreshAt: 0,
         })
       );
     }
